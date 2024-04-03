@@ -1,0 +1,3 @@
+[submodule "my-react"]
+	path = my-react
+	url = ../my-react
