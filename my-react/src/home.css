@@ -1,0 +1,232 @@
+.right,.left{
+  width: 50%;
+  color: white;
+}
+.img-work{
+   width: 100%;
+}
+.container{
+display: flex;
+justify-content: center;
+align-items: center;
+height: 80vh;
+gap: 52px;
+font-family: 'Roboto', sans-serif;
+font-size: 24px;
+}
+.span1{
+  color: rgb(124, 124, 205);
+
+}
+body {
+    margin: 0;
+  }
+  
+  article {
+    display: flex;
+    padding-bottom: 100px;
+  }
+  
+  .hero {
+    /* background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/81080/pr-hoodie.jpg"); */
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+    width: 52%;
+    height: 100vh;
+    clip-path: polygon(0 0, 91% 0, 76% 100%, 0 100%);
+    -webkit-clip-path: polygon(0 0, 91% 0, 76% 100%, 0 100%);
+  }
+  .img-left{
+    width: 100%;
+    height: 50vh;
+  }
+  article{
+    height: 60vh;
+  }
+  .home-div{
+    background-color: #000;
+  }
+  .content {
+    width: 47%;
+  }
+  .content__header {
+    width: 37%;
+    padding-right: 3%;
+    text-align: right;
+    display: inline-block;
+    vertical-align: top;
+  }
+  .content__header h2 {
+    font-family: sans-serif;
+    text-transform: capitalize;
+    color: #969696;
+    margin-top: 0;
+  }
+  .content__header span {
+    font-family: sans-serif;
+  }
+  .content__copy {
+    width: 54%;
+    padding-left: 3%;
+    padding-right: 3%;
+    border-left: 1px solid #d2d0d0;
+    box-sizing: border-box;
+    display: inline-block;
+    vertical-align: top;
+    color: white;
+  }
+  h4{
+    font-size: 1rem;
+    color: #bbbbbb;
+  }
+  
+  h1 {
+    font-family: "bee", sans-serif;
+    text-transform: uppercase;
+    font-style: italic;
+    font-size: 12vw;
+    margin: 10% auto 5% -30%;
+    padding-left: 8%;
+    z-index: 1;
+    line-height: 1;
+    position: relative;
+    align-self: flex-start;
+    width: 100%;
+    color: #000;
+    letter-spacing: 2px;
+  }
+  h1:after {
+    content: "";
+    display: inline-block;
+    background-color: #FFF;
+    width: 100%;
+    height: 130%;
+    position: absolute;
+    left: -7%;
+    right: 0;
+    z-index: -1;
+    top: 50%;
+    transform: translateY(-50%);
+    clip-path: polygon(16% 0%, 100% 0, 100% 100%, 8% 100%);
+    -webkit-clip-path: polygon(16% 0%, 100% 0, 100% 100%, 8% 100%);
+  }
+  
+  p {
+    margin-bottom: 0;
+    margin-top: 0;
+    text-indent: 1.5em;
+    font-size: 0.8rem;
+  }
+  p:first-of-type {
+    text-indent: 0;
+  }
+  p:nth-of-type(1)::first-letter {
+    float: left;
+    font-size: 9em;
+    margin: -0.2em 0.04em -0.2em 0;
+    font-family: "bee", sans-serif;
+    font-weight: bold;
+  }
+  
+  h3 {
+    color: #009a49;
+    margin-bottom: 0.1rem;
+    font-family: sans-serif;
+  }
+  h3 + p {
+    text-indent: 0;
+  }
+  *{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+  }
+  .container1{
+    max-width: 1170px;
+    margin:auto;
+  }
+  .row{
+    display: flex;
+    flex-wrap: wrap;
+  }
+  ul{
+    list-style: none;
+  }
+  .footer{
+    background-color: #24262b;
+      padding: 70px 0;
+  }
+  .footer-col{
+     width: 25%;
+     padding: 0 15px;
+  }
+  .footer-col h4{
+    font-size: 18px;
+    color: #ffffff;
+    text-transform: capitalize;
+    margin-bottom: 35px;
+    font-weight: 500;
+    position: relative;
+  }
+  .footer-col h4::before{
+    content: '';
+    position: absolute;
+    left:0;
+    bottom: -10px;
+    background-color: #e91e63;
+    height: 2px;
+    box-sizing: border-box;
+    width: 50px;
+  }
+  .footer-col ul li:not(:last-child){
+    margin-bottom: 10px;
+  }
+  .footer-col ul li a{
+    font-size: 16px;
+    text-transform: capitalize;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 300;
+    color: #bbbbbb;
+    display: block;
+    transition: all 0.3s ease;
+  }
+  .footer-col ul li a:hover{
+    color: #ffffff;
+    padding-left: 8px;
+  }
+  .footer-col .social-links a{
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    background-color: rgba(255,255,255,0.2);
+    margin:0 10px 10px 0;
+    text-align: center;
+    line-height: 40px;
+    border-radius: 50%;
+    color: #ffffff;
+    transition: all 0.5s ease;
+  }
+  .footer-col .social-links a:hover{
+    color: #24262b;
+    background-color: #ffffff;
+  }
+  
+  /*responsive*/
+  @media(max-width: 767px){
+    .footer-col{
+      width: 50%;
+      margin-bottom: 30px;
+  }
+  }
+  @media(max-width: 574px){
+    .footer-col{
+      width: 100%;
+  }
+  }
+  body{
+    line-height: 1.5;
+    font-family: 'Poppins', sans-serif;
+  }  

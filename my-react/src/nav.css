@@ -1,0 +1,19 @@
+.navbar-nav{
+ gap:32px;
+ margin:0px auto;
+}
+.nav-item{
+  border: 1px solid rgb(69, 69, 78);
+  border-radius: 8px;
+  align-items: center;
+  padding: 8px;
+  display: flex;
+  justify-content: center;
+  
+  height: 32px;
+  background-color: rgb(227, 248, 248);
+}
+.nav-Link{
+    text-decoration: none;
+
+}
