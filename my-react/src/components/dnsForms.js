@@ -2,7 +2,8 @@ import React, { useContext, useState } from 'react';
 import '../dns.css';
 import { default as CompanyContext } from '../context/companycontext';
 
-const DnsForm = () => {
+
+const DnsForm = (props) => {
   const [CompanyName, setName] = useState('');
   const [Position, setPosition] = useState('');
   const [Image, setImage] = useState('');
@@ -20,7 +21,7 @@ const DnsForm = () => {
 
     try {
       // Use the postData function from the context to send data to the backend
-      await context.postData({ CompanyName, Position, Image });
+      await context.postData({CompanyName, Position, Image , Email: props.email});
       
     } catch (error) {
       console.error('Error submitting data:', error);
