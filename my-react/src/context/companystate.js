@@ -22,7 +22,7 @@ const CompanyState = (props) => {
 
   const postData = async (data) => {
     try {
-      const res = await fetch('http://localhost:4000/dns', {
+      const res = await fetch('https://jobmanagerapp-5.onrender.com/dns', {
         method: "POST",
         mode: "cors", 
         headers: {
@@ -57,7 +57,7 @@ const CompanyState = (props) => {
   };
   const GetData = async () => {
     try {
-      const result = await fetch('http://localhost:4000/show', {
+      const result = await fetch('https://jobmanagerapp-5.onrender.com/show', {
         method: "GET",
         mode: "cors", 
         headers: {
@@ -79,7 +79,7 @@ const CompanyState = (props) => {
 };
 const GetDataBySearch = async (data) => {
   try {
-    const result = await fetch(`http://localhost:4000/show/${data}`, {
+    const result = await fetch(`https://jobmanagerapp-5.onrender.com/${data}`, {
       method: "GET",
       mode: "cors",
       headers: {
@@ -100,7 +100,7 @@ const GetDataBySearch = async (data) => {
 };
 const DeleteData = async (data) => {
   try {
-    const result1 = await fetch(`http://localhost:4000/show/${data}`, {
+    const result1 = await fetch(`https://jobmanagerapp-5.onrender.com/${data}`, {
       method: "DELETE",
       mode: "cors", 
       headers: {
@@ -119,7 +119,7 @@ const DeleteData = async (data) => {
 };
 const DeleteAllData = async () => {
   try {
-    const result1 = await fetch(`http://localhost:4000/show`, {
+    const result1 = await fetch(`https://jobmanagerapp-5.onrender.com/show`, {
       method: "DELETE",
       mode: "cors", 
       headers: {
@@ -142,7 +142,7 @@ const ApplyFilter = async (data,order) => {
   setOrder(-1);
    }
   try {
-    const result = await fetch(`http://localhost:4000/filter/${data}/${order}`, {
+    const result = await fetch(`https://jobmanagerapp-5.onrender.com/${data}/${order}`, {
       method: "GET",
       mode: "cors",
       headers: {
@@ -164,7 +164,7 @@ const ApplyFilter = async (data,order) => {
 };
 const UpdateData = async (data,id) => {
   try {
-    const res = await fetch(`http://localhost:4000/update?id=${id}`, {
+    const res = await fetch(`https://jobmanagerapp-5.onrender.com/update?id=${id}`, {
       method: "PUT",
       mode: "cors", 
       headers: {
@@ -193,7 +193,7 @@ const UpdateData = async (data,id) => {
 };
 const signUp = async (data)=>{
   try {
-    const result = await fetch('http://localhost:4000/signin', {
+    const result = await fetch('https://jobmanagerapp-5.onrender.com/signin', {
       method: "POST",
       mode: "cors", 
       headers: {
@@ -216,7 +216,7 @@ const signUp = async (data)=>{
 }
 const Login = async (data)=>{
   try {
-    const result = await fetch('http://localhost:4000/login', {
+    const result = await fetch('https://jobmanagerapp-5.onrender.com/login', {
       method: "POST",
       mode: "cors", 
       headers: {
@@ -236,7 +236,7 @@ const Login = async (data)=>{
 }
 const Website = async (data)=>{
   try {
-    const result = await fetch('http://localhost:4000/website', {
+    const result = await fetch('https://jobmanagerapp-5.onrender.com/website', {
       method: "POST",
       mode: "cors", 
       headers: {
@@ -257,7 +257,7 @@ const Website = async (data)=>{
  
 const getWebsite = async ()=>{
   try {
-    const result = await fetch('http://localhost:4000/website', {
+    const result = await fetch('https://jobmanagerapp-5.onrender.com/website', {
       method: "GET",
       mode: "cors", 
       headers: {
@@ -276,7 +276,7 @@ const getWebsite = async ()=>{
 }
 const getWebsiteByJob = async (data)=>{
   try {
-    const result = await fetch(`http://localhost:4000/showWebsite/${data}`, {
+    const result = await fetch(`https://jobmanagerapp-5.onrender.com/showWebsite/${data}`, {
       method: "GET",
       mode: "cors", 
       headers: {
@@ -296,7 +296,7 @@ const getWebsiteByJob = async (data)=>{
 
 const updateWebsite = async(data)=>{
   try {
-    const result = await fetch(`http://localhost:4000/showWebsite`, {
+    const result = await fetch(`https://jobmanagerapp-5.onrender.com/showWebsite`, {
       method: "PUT",
       mode: "cors", 
       headers: {
