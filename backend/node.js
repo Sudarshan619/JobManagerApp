@@ -32,15 +32,14 @@ app.listen(4000, () => {
 
 app.post('/dns', async (req, res) => {
   try {
-    const { CompanyName, Position, Image ,Email} = req.body;
+    const { CompanyName, Position, Image} = req.body;
 
     // Create a new instance of the UserModel
     const user = new Company({
       CompanyName: CompanyName,
       Position: Position,
       Image: Image,
-      User:req.user.id,
-      Email:Email
+      // User:req.user.id
     });
 
     const savedUser = await user.save();
