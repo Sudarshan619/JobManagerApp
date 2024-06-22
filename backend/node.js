@@ -1,16 +1,14 @@
 const express = require("express");
-const md5 = require("md5");
-const bcrypt = require("bcryptjs");
 const bodyParser = require("body-parser");
 const connectToDb = require("./models/db");
 const Company = require('./models/companymodule')
 const nodemailer = require('nodemailer');
 const User = require('./models/usermodule')
 const Website = require('./models/websitemodule')
-const fetchUser = require('./models/middleware/auth')
+// const fetchUser = require('./models/middleware/auth')
 const app = express();
 const cors = require('cors');
-const jwt = require("jsonwebtoken");
+// const jwt = require("jsonwebtoken");
 
 const transporter = nodemailer.createTransport({
   host: 'smtp.ethereal.email',
@@ -156,75 +154,75 @@ app.put('/update', async (req, res) => {
 }
 )
 
-app.post('/signin', async (req, res) => {
-  try {
+// app.post('/signin', async (req, res) => {
+//   try {
     
-    const { name, email, password } = req.body;
+//     const { name, email, password } = req.body;
 
-    const saltRounds = 10;
-    const salt = bcrypt.genSaltSync(saltRounds);
+//     const saltRounds = 10;
+//     const salt = bcrypt.genSaltSync(saltRounds);
 
-    const secpassword = bcrypt.hashSync(password, salt);
+//     const secpassword = bcrypt.hashSync(password, salt);
 
-    const user = new User({
-      Name: name,
-      Email: email,
-      Password: secpassword
-    });
-    const payload = {
-      user: {
-        id: user.id
-      }
-    };
+//     const user = new User({
+//       Name: name,
+//       Email: email,
+//       Password: secpassword
+//     });
+//     const payload = {
+//       user: {
+//         id: user.id
+//       }
+//     };
     
-    const savedUser = await user.save();
-    const jwt_secretkey = "sudarshan"; 
+//     const savedUser = await user.save();
+//     const jwt_secretkey = "sudarshan"; 
 
-    const data = jwt.sign(payload, jwt_secretkey);
+//     const data = jwt.sign(payload, jwt_secretkey);
 
-    res.json(data);
+//     res.json(data);
 
-    // res.redirect("/home");
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).json({ message: 'bere kelsa nodko' });
-  }
+//     // res.redirect("/home");
+//   } catch (error) {
+//     console.error(error.message);
+//     res.status(500).json({ message: 'bere kelsa nodko' });
+//   }
   
-})
-app.post('/login', async (req, res) => {
-  try {
-    const jwt_secretkey = "sudarshan"; 
-    const { email, password } = req.body;
+// })
+// app.post('/login', async (req, res) => {
+//   try {
+//     const jwt_secretkey = "sudarshan"; 
+//     const { email, password } = req.body;
 
     
-    const user = await User.findOne({ Email: email });
+//     const user = await User.findOne({ Email: email });
     
-    if (!user) {
-      return res.status(400).json({ message: 'Invalid credentials' });
-    }
+//     if (!user) {
+//       return res.status(400).json({ message: 'Invalid credentials' });
+//     }
     
-    const isPasswordValid = await bcrypt.compare(password, user.Password);
+//     const isPasswordValid = await bcrypt.compare(password, user.Password);
 
-    if (!isPasswordValid) {
-      return res.status(400).json({ message: 'Invalid credentials' });
-    }
+//     if (!isPasswordValid) {
+//       return res.status(400).json({ message: 'Invalid credentials' });
+//     }
 
-    const payload = {
-      user: {
-        id: user.id
-      }
-    };
+//     const payload = {
+//       user: {
+//         id: user.id
+//       }
+//     };
 
-    const data = jwt.sign(payload, jwt_secretkey);
+//     const data = jwt.sign(payload, jwt_secretkey);
    
-    res.json(data);
+//     res.json(data);
 
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).json({ message: 'bere kelsa nodko' });
-  }
+//   } catch (error) {
+//     console.error(error.message);
+//     res.status(500).json({ message: 'bere kelsa nodko' });
+//   }
 
-})
+// })
 app.post('/website', async (req, res) => {
   try {
     const { WebsiteName, Image } = req.body;
