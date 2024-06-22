@@ -31,13 +31,20 @@ const CompanyState = (props) => {
         },
         body: JSON.stringify(data),
       });
-      if(data){
+      if (res.ok) {
+        Swal.fire({
+          title: 'Added successfully',
+          text: 'Do you want to continue',
+          icon: 'success',
+          confirmButtonText: 'Cool'
+        });
+      } else {
         Swal.fire({
           title: 'Error!',
           text: 'Do you want to continue',
           icon: 'error',
           confirmButtonText: 'Cool'
-        })
+        });
       }
       console.log(data);
       const result = await res.json();
