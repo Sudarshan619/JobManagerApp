@@ -2,7 +2,7 @@ import React from 'react'
 import '../table1.css'
 import CompanyContext from '../context/companycontext'
 import { useState, useContext, useEffect } from 'react'
-export default function ShowWebsite() {
+export default function ShowWebsite(props) {
     const context = useContext(CompanyContext);
     const [getdata,setGetData] = useState([]);
     const fetchData = async () => {
@@ -21,6 +21,7 @@ export default function ShowWebsite() {
 
     }, [context.job]);
     console.log(getdata)
+    console.log(props.title)
 
     return (
         <div>

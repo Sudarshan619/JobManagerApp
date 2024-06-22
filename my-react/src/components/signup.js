@@ -3,12 +3,13 @@ import '../signup.css';
 import UserContext from '../context/usercontext'
 import CompanyContext from '../context/companycontext';
 
+
 export default function SignUp () {
   const [name,setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [result,setResult] = useState('');
-  
+
   const ans = useContext(CompanyContext);
 
   const handleSignup = async () => {

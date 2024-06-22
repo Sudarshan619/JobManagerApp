@@ -1,11 +1,15 @@
 import React, { useState } from 'react'
 import '../home.css'
 import { useEffect } from 'react'
+import Loader from "react-js-loader";
 
 export default function Home() {
     const fetchnews = async () => {
-        let url = "https://newsapi.org/v2/top-headlines?category=sports&language=en&pageSize=10&apiKey=141e8059d4d14ad7960823296f7b3bce"
-
+        const key = process.env.REACT_APP_API_KEY;
+        const url= `https://newsapi.org/v2/top-headlines?category=sports&language=en&pageSize=10&apiKey=${key}`
+        // let url = "https://newsapi.org2/v2/top-headlines?category=sports&language=en&pageSize=10&apiKey=141e8059d4d14ad7960823296f7b3bce"
+        console.log(url);
+        
         const res = await fetch(url);
         const result = await res.json();
 
@@ -17,16 +21,21 @@ export default function Home() {
 
     }
 
-
+    const [Loading,setLoading] = useState(true);
     const [articles, setArticles] = useState([])
     useEffect(() => {
         fetchnews();
-    });
+    },[]);
+
+    const handleLoad = ()=>{
+        setLoading(false);
+    }
     return (
 
         <>
             <div className='container'>
                 <div className='left'>
+                    
                     <span className='span1'>Welcome to Job Manager</span> – your solution for seamless work application management. Streamline updates, troubleshoot with ease, and optimize performance effortlessly. Explore how we redefine efficiency in handling work applications, putting you in control. Welcome to a more productive workflow.
                 </div>
                 <div className='right'>
@@ -45,7 +54,8 @@ export default function Home() {
                             // </div>
                             <article key={index}>
                                 <div className="hero">
-                                    <img src={element.urlToImage} className='img-left'></img>
+                                    {Loading && <Loader/>}
+                                    <img src={element.urlToImage?element.urlToImage:"no-image.png"} className='img-left' onLoad={handleLoad}></img>
                                 </div>
                                 <div className="content">
                                 <span className="badge rounded-pill text-bg-info">{element.source.name}</span>
@@ -71,10 +81,10 @@ export default function Home() {
                     )}
                 </div>
             </div>
-            <footer class="footer">
-     <div class="container1">
-      <div class="row">
-        <div class="footer-col">
+            <footer className="footer">
+     <div className="container1">
+      <div className="row">
+        <div className="footer-col">
           <h4>company</h4>
           <ul>
             <li><a href="#">about us</a></li>
@@ -83,7 +93,7 @@ export default function Home() {
             <li><a href="#">affiliate program</a></li>
           </ul>
         </div>
-        <div class="footer-col">
+        <div className="footer-col">
           <h4>get help</h4>
           <ul>
             <li><a href="#">FAQ</a></li>
@@ -93,7 +103,7 @@ export default function Home() {
             <li><a href="#">payment options</a></li>
           </ul>
         </div>
-        <div class="footer-col">
+        <div className="footer-col">
           <h4>online shop</h4>
           <ul>
             <li><a href="#">watch</a></li>
@@ -102,13 +112,13 @@ export default function Home() {
             <li><a href="#">dress</a></li>
           </ul>
         </div>
-        <div class="footer-col">
+        <div className="footer-col">
           <h4>follow us</h4>
-          <div class="social-links">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+          <div className="social-links">
+            <a href="#"><i className="fab fa-facebook-f"></i></a>
+            <a href="#"><i className="fab fa-twitter"></i></a>
+            <a href="#"><i className="fab fa-instagram"></i></a>
+            <a href="#"><i className="fab fa-linkedin-in"></i></a>
           </div>
         </div>
       </div>

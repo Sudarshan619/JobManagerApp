@@ -10,6 +10,15 @@ const CompanyState = (props) => {
   const [order,setOrder] = useState('1');
   const [token,setToken] = useState('');
   const [job,setJob] = useState([]);
+  const [userdata,setUserdata] = useState({});
+
+  const setDetails = async (data)=>{
+      setUserdata(data);
+  }
+
+  const getDetails= async()=>{
+      return userdata;
+  }
 
   const postData = async (data) => {
     try {
@@ -110,7 +119,6 @@ const DeleteAllData = async () => {
          "Content-Type": "application/json",
       },
     });
-    
     
   } catch (error) {
     console.error("Error posting data:", error);
@@ -325,7 +333,10 @@ const setWebsiteJob = (data)=>{
     getWebsiteByJob,
     updateWebsite,
     setWebsiteJob,
-    job
+    job,
+    setDetails,
+    getDetails,
+    userdata
     
   };
 

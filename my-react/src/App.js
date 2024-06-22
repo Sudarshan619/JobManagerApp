@@ -8,6 +8,7 @@ import CompanyState from './context/companystate';
 import SubCompany from './components/subCompany';
 import Website from './components/website';
 import ShowWebsite from './components/showWebsite';
+import { useAuth0 } from "@auth0/auth0-react";
 
 import {
   BrowserRouter as Router,
@@ -27,7 +28,7 @@ const App = () => {
           <Route path="/websiteAdd" element={<Website />} />
           <Route path="/website" element={<SubCompany />} />
           <Route path="/" element={<Home />} />
-          <Route path="/showWebsite" element={<ShowWebsite />} />
+          <Route path="/showWebsite" element={<ShowWebsite title={"subcomp"} />} />
           <Route path="/dns" element={<DnsForm />}>
           </Route>
           <Route path="/SignUp" element={<SignUp />} />

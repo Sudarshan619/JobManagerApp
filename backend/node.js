@@ -1,6 +1,6 @@
 const express = require("express");
 const md5 = require("md5");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const bodyParser = require("body-parser");
 const connectToDb = require("./models/db");
 const Company = require('./models/companymodule')
@@ -34,14 +34,15 @@ app.listen(4000, () => {
 
 app.post('/dns', async (req, res) => {
   try {
-    const { CompanyName, Position, Image } = req.body;
+    const { CompanyName, Position, Image ,Email} = req.body;
 
     // Create a new instance of the UserModel
     const user = new Company({
       CompanyName: CompanyName,
       Position: Position,
       Image: Image,
-      User:req.user.id
+      User:req.user.id,
+      Email:Email
     });
 
     const savedUser = await user.save();

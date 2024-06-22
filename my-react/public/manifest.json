@@ -17,6 +17,16 @@
       "type": "image/png",
       "sizes": "512x512"
     }
+    
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/*",
+        "scripts/*",
+        "styles/*"
+      ]
+    }
   ],
   "start_url": ".",
   "display": "standalone",

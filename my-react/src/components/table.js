@@ -21,7 +21,7 @@ export default function Table() {
     const [website, setWebsite] = useState([]);
     const [value, setValue] = useState('');
     const inputref = useRef("");
-
+    const [empty, setempty] = useState(false);
 
 
     const fetchData = async () => {
@@ -39,7 +39,7 @@ export default function Table() {
     let sum =0;
     useEffect(() => {
         fetchData();
-        console.log(sum++)
+       
     }, []);
 
 
@@ -115,11 +115,22 @@ export default function Table() {
         setStatus(e.target.value);
     }
     const handleSubmit = async () => {
+
+        // const EmptyFields = {
+        //     name: !name,
+        //     image: !image,
+        //     status: !status,
+        //     position: !position,
+        //     date: !date
+
+        // }
+
+        // setEmptyFields(emptyFields)
         if (!name || !position || !image || !status || !date) {
-            console.error('Please fill in all fields');
+            setempty(true);
             return;
         }
-
+        
         a.UpdateData({ name, position, image, status, date }, id);
         const data = await a.GetData();
         setModal("modal");
@@ -157,8 +168,11 @@ export default function Table() {
                                         className="dns-input"
                                         type="text"
                                         value={name}
-                                        onChange={(e) => setName(e.target.value)}
+                                        onChange={(e) => {setName(e.target.value); setempty(false);}}
+                                        
+                                        
                                     />
+                                
                                 </label>
                                 <label className="dns-label">
                                     Position
@@ -167,7 +181,9 @@ export default function Table() {
                                         type="text"
                                         value={position}
                                         onChange={(e) => setPosition(e.target.value)}
+                                        required
                                     />
+                                   { !position.length && <h6>This field cannot be empty</h6>}
                                 </label>
                                 <label className="dns-label">
                                     Status
@@ -186,6 +202,7 @@ export default function Table() {
                                         type="file"
                                         value={image}
                                         onChange={(e) => setImage(e.target.value)}
+                                        required
                                     />
                                 </label>
                                 <label className="dns-label">
@@ -195,8 +212,10 @@ export default function Table() {
                                         type="date"
                                         value={date}
                                         onChange={(e) => setDate(e.target.value)}
+                                        required
                                     />
                                 </label>
+                                { empty ?<h6>Please fill all details</h6>:""}
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -263,6 +282,8 @@ export default function Table() {
                     <div className="col col-3" onClick={handleclick} value="Date">Date<span><svg className="up-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2L329.4 246.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z" /></svg><svg className="up-arrow" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" /></svg></span></div>
                     <div className="col col-4">Update</div>
                     <div className="col col-4">Delete</div>
+                    <div className="col col-4"></div>
+                    <div className="col col-4"></div>
                 </li>
                 {getdata.length > 0 ? getdata.map((element, index) =>
                     <li key={index} className="table-row">
