@@ -31,7 +31,10 @@ const CompanyState = (props) => {
         },
         body: JSON.stringify(data),
       });
-      if (res.ok) {
+      const ans = await res.json();
+      console.log(ans.message)
+      if (ans.message == "success") {
+        console.log("success")
         Swal.fire({
           title: 'Added successfully',
           text: 'Do you want to continue',
@@ -47,7 +50,7 @@ const CompanyState = (props) => {
         });
       }
       console.log(data);
-      const result = await res.json();
+      // const result = await res.json();
       console.log(result);
       setResponse(result);
     } catch (error) {
@@ -79,7 +82,7 @@ const CompanyState = (props) => {
 };
 const GetDataBySearch = async (data) => {
   try {
-    const result = await fetch(`https://jobmanagerapp-5.onrender.com/${data}`, {
+    const result = await fetch(`https://jobmanagerapp-5.onrender.com/show/${data}`, {
       method: "GET",
       mode: "cors",
       headers: {
@@ -88,9 +91,9 @@ const GetDataBySearch = async (data) => {
       },
     });
    
-    const result1 = await result.json();
+    return result.json();
    
-    setTable(result1)
+    // setTable(result1)
     
     // setTable(result1); // Update to setTable(result1) instead of setTable(result)
   } catch (error) {
@@ -100,7 +103,7 @@ const GetDataBySearch = async (data) => {
 };
 const DeleteData = async (data) => {
   try {
-    const result1 = await fetch(`https://jobmanagerapp-5.onrender.com/${data}`, {
+    await fetch(`https://jobmanagerapp-5.onrender.com/show/${data}`, {
       method: "DELETE",
       mode: "cors", 
       headers: {
@@ -142,7 +145,7 @@ const ApplyFilter = async (data,order) => {
   setOrder(-1);
    }
   try {
-    const result = await fetch(`https://jobmanagerapp-5.onrender.com/${data}/${order}`, {
+    const result = await fetch(`https://jobmanagerapp-5.onrender.com/filter/${data}/${order}`, {
       method: "GET",
       mode: "cors",
       headers: {
@@ -236,7 +239,7 @@ const Login = async (data)=>{
 }
 const Website = async (data)=>{
   try {
-    const result = await fetch('https://jobmanagerapp-5.onrender.com/website', {
+    const result = await fetch('http://localhost:4000/website', {
       method: "POST",
       mode: "cors", 
       headers: {
@@ -320,7 +323,39 @@ const setWebsiteJob = (data)=>{
     setJob(data);
     console.log(job)
 }
-
+const DeleteWebsite = async (data)=>{
+   try{
+    const result = await fetch(`https://jobmanagerapp-5.onrender.com/deleteWebsite/${data}`, {
+      method: "DELETE",
+      mode: "cors", 
+      headers: {
+         "Content-Type": "application/json",
+      },
+    });
+    const ans = await result.json();
+    console.log(ans.message)
+    if (ans.message == "success") {
+      console.log("success")
+      Swal.fire({
+        title: 'Added successfully',
+        text: 'Do you want to continue',
+        icon: 'success',
+        confirmButtonText: 'Cool'
+      });
+    } else {
+      Swal.fire({
+        title: 'Error!',
+        text: 'Do you want to continue',
+        icon: 'error',
+        confirmButtonText: 'Cool'
+      });
+    }
+   }
+   catch(e){
+    console.error("Error posting data:", e);
+   }
+   
+}
   const contextValue = {
     response,
     postData,
@@ -343,7 +378,8 @@ const setWebsiteJob = (data)=>{
     job,
     setDetails,
     getDetails,
-    userdata
+    userdata,
+    DeleteWebsite
     
   };
 

@@ -44,7 +44,7 @@ export default function Navbar(){
           <li className="nav-item">
             <Link className="nav-Link  active" aria-current="page" to="/">Home</Link>
           </li>
-          {isAuthenticated &&
+          {/* {isAuthenticated && */}
           <>
           <li className="nav-item">
             <Link className="nav-Link  active" aria-current="page" to="/website">Website</Link>
@@ -59,7 +59,7 @@ export default function Navbar(){
             <Link className="nav-Link " to="/show">Table </Link>
           </li>
           </>
-           }
+           {/* } */}
           
           <li className="nav-item">
             {isAuthenticated ? (

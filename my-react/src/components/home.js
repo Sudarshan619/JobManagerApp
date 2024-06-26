@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import '../home.css'
 import { useEffect } from 'react'
 import Loader from "react-js-loader";
+import Email from './email';
 
 export default function Home() {
     const fetchnews = async () => {
@@ -46,7 +47,7 @@ export default function Home() {
             <div>
 
                 <div className='home-div'>
-
+                {/* <Email/> */}
                     {articles.length > 0 ? (
                         articles.map((element, index) => (
                             // <div key={index} title={element.title} description={element.desc}>
@@ -80,6 +81,7 @@ export default function Home() {
                         <p>Loading articles...</p>
                     )}
                 </div>
+                
             </div>
             <footer className="footer">
      <div className="container1">

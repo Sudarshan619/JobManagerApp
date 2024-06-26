@@ -28,7 +28,7 @@ const CompanySchema = new Schema ({
    },
    Date:{
       type:String,
-      default:new Date().getDay()
+      default: () => new Date().toISOString()
    }
 
 })
