@@ -8,7 +8,7 @@ const Website = require('./models/websitemodule')
 const mongoose = require("mongoose");
 // const ObjectId = mongoose.Types.ObjectId;
 
-const Imap = require('imap');
+// const Imap = require('imap');
 // const fetchUser = require('./models/middleware/auth')
 const app = express();
 const cors = require('cors');
@@ -309,65 +309,65 @@ app.delete('/deleteWebsite/:id', async(req,res)=>{
 
 })
 // const { simpleParser } = require('mailparser');
-const imapConfig = {
-    user: 'pujarsudarshan.com',
-    password: 'Sudarshan@999',
-    host: 'imap.gmail.com',
-    port: 993,
-    TLS : true    
-};
+// const imapConfig = {
+//     user: 'pujarsudarshan.com',
+//     password: 'Sudarshan@999',
+//     host: 'imap.gmail.com',
+//     port: 993,
+//     TLS : true    
+// };
 
-function fetchEmailsFromSender(senderEmail, callback) {
-  const imap = new Imap(imapConfig);
+// function fetchEmailsFromSender(senderEmail, callback) {
+//   const imap = new Imap(imapConfig);
 
-  function openInbox(cb) {
-    imap.openBox('INBOX', false, cb);
-  }
+//   function openInbox(cb) {
+//     imap.openBox('INBOX', false, cb);
+//   }
 
-  imap.once('ready', function() {
-    openInbox(function(err, box) {
-      if (err) throw err;
-      imap.search(['UNSEEN', ['FROM', senderEmail]], function(err, results) {
-        if (err) throw err;
-        if (results.length > 0) {
-          const f = imap.fetch(results, { bodies: '' });
-          const emails = [];
+//   imap.once('ready', function() {
+//     openInbox(function(err, box) {
+//       if (err) throw err;
+//       imap.search(['UNSEEN', ['FROM', senderEmail]], function(err, results) {
+//         if (err) throw err;
+//         if (results.length > 0) {
+//           const f = imap.fetch(results, { bodies: '' });
+//           const emails = [];
 
-          f.on('message', function(msg, seqno) {
-            msg.on('body', function(stream, info) {
-              simpleParser(stream, (err, parsed) => {
-                if (err) throw err;
-                emails.push(parsed);
-              });
-            });
-          });
+//           f.on('message', function(msg, seqno) {
+//             msg.on('body', function(stream, info) {
+//               simpleParser(stream, (err, parsed) => {
+//                 if (err) throw err;
+//                 emails.push(parsed);
+//               });
+//             });
+//           });
 
-          f.once('error', function(err) {
-            console.log('Fetch error: ' + err);
-          });
+//           f.once('error', function(err) {
+//             console.log('Fetch error: ' + err);
+//           });
 
-          f.once('end', function() {
-            imap.end();
-            callback(null, emails);
-          });
-        } else {
-          imap.end();
-          callback(null, []);
-        }
-      });
-    });
-  });
+//           f.once('end', function() {
+//             imap.end();
+//             callback(null, emails);
+//           });
+//         } else {
+//           imap.end();
+//           callback(null, []);
+//         }
+//       });
+//     });
+//   });
 
-  imap.once('error', function(err) {
-    callback(err);
-  });
+//   imap.once('error', function(err) {
+//     callback(err);
+//   });
 
-  imap.once('end', function() {
-    console.log('Connection ended');
-  });
+//   imap.once('end', function() {
+//     console.log('Connection ended');
+//   });
 
-  imap.connect();
-}
+//   imap.connect();
+// }
 
 app.get('/emails',(req, res) => {
   const senderEmail =  "pujarsudarshan@gmail.com";
