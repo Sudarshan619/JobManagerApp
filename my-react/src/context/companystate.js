@@ -239,7 +239,7 @@ const Login = async (data)=>{
 }
 const Website = async (data)=>{
   try {
-    const result = await fetch('http://localhost:4000/website', {
+    const result = await fetch('https://jobmanagerapp-5.onrender.com/website', {
       method: "POST",
       mode: "cors", 
       headers: {
