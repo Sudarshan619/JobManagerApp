@@ -3,8 +3,12 @@ const bodyParser = require("body-parser");
 const connectToDb = require("./models/db");
 const Company = require('./models/companymodule')
 const nodemailer = require('nodemailer');
-const User = require('./models/usermodule')
+const User = require('./models/usermodule');
 const Website = require('./models/websitemodule')
+const mongoose = require("mongoose");
+// const ObjectId = mongoose.Types.ObjectId;
+
+const Imap = require('imap');
 // const fetchUser = require('./models/middleware/auth')
 const app = express();
 const cors = require('cors');
@@ -44,6 +48,8 @@ app.post('/dns', async (req, res) => {
 
     const savedUser = await user.save();
 
+    res.json({"message":"success"});
+
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ message: 'bere kelsa nodko' });
@@ -61,8 +67,9 @@ app.get('/show', async (req, res) => {
 app.get('/show/:id', async (req, res) => {
 
   const ans = req.params.id;
-  const user1 = await Company.find({ CompanyName: ans });
-  res.send(user1);
+  const user1 = await Company.find({ CompanyName: ans }); 
+  console.log(user1);
+  res.json(user1);
 
 })
 app.get('/filter/:id/:order_id', async (req, res) => {
@@ -285,4 +292,91 @@ app.put('/showWebsite', async (req, res) => {
 
 }
 )
+
+app.delete('/deleteWebsite/:id', async(req,res)=>{
+  try {
+    const item = req.params.id;
+    console.log("hello from server")
+    if (!mongoose.Types.ObjectId.isValid(item)) {
+      return res.status(400).json({ message: 'Invalid ID' });
+    }
+    await Website.findByIdAndDelete({ _id: new mongoose.Types.ObjectId(item)});
+    res.json({ message: 'success'});
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ message: 'bere kelsa nodko' });
+  }
+
+})
+// const { simpleParser } = require('mailparser');
+const imapConfig = {
+    user: 'pujarsudarshan.com',
+    password: 'Sudarshan@999',
+    host: 'imap.gmail.com',
+    port: 993,
+    TLS : true    
+};
+
+function fetchEmailsFromSender(senderEmail, callback) {
+  const imap = new Imap(imapConfig);
+
+  function openInbox(cb) {
+    imap.openBox('INBOX', false, cb);
+  }
+
+  imap.once('ready', function() {
+    openInbox(function(err, box) {
+      if (err) throw err;
+      imap.search(['UNSEEN', ['FROM', senderEmail]], function(err, results) {
+        if (err) throw err;
+        if (results.length > 0) {
+          const f = imap.fetch(results, { bodies: '' });
+          const emails = [];
+
+          f.on('message', function(msg, seqno) {
+            msg.on('body', function(stream, info) {
+              simpleParser(stream, (err, parsed) => {
+                if (err) throw err;
+                emails.push(parsed);
+              });
+            });
+          });
+
+          f.once('error', function(err) {
+            console.log('Fetch error: ' + err);
+          });
+
+          f.once('end', function() {
+            imap.end();
+            callback(null, emails);
+          });
+        } else {
+          imap.end();
+          callback(null, []);
+        }
+      });
+    });
+  });
+
+  imap.once('error', function(err) {
+    callback(err);
+  });
+
+  imap.once('end', function() {
+    console.log('Connection ended');
+  });
+
+  imap.connect();
+}
+
+app.get('/emails',(req, res) => {
+  const senderEmail =  "pujarsudarshan@gmail.com";
+  fetchEmailsFromSender(senderEmail,  (err, emails) => {
+    if (err) {
+      return res.status(505).json({"message":err.toString()});
+    }
+    res.json(emails);
+   
+  });
+});
 connectToDb();

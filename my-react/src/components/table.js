@@ -20,7 +20,7 @@ export default function Table() {
     const [id, setid] = useState('');
     const [website, setWebsite] = useState([]);
     const [value, setValue] = useState('');
-    const inputref = useRef("");
+    const inputRef = useRef(null);
     const [empty, setempty] = useState(false);
 
 
@@ -46,8 +46,10 @@ export default function Table() {
 
     const handleDelete = async () => {
         if (deleteIndex !== null) {
+            console.log(deleteIndex)
             await a.DeleteData(deleteIndex);
             const data = await a.GetData();
+            console.log("hello")
 
             if (a.result) {
                 // setDisplay("none");
@@ -58,6 +60,7 @@ export default function Table() {
                     confirmButtonText: 'Ok'
                 })
             }
+            console.log(data)
             setGetData(data)
             setDeleteIndex(null); // Reset deleteIndex
         }
@@ -78,28 +81,32 @@ export default function Table() {
             setDeleteIndex(null);
         }
     };
-    const handlechange = async (e) => {
+    const handleChange = async (e) => {
         e.preventDefault();
+        const searchValue = e.target.value;
         
-        console.log(search);
-        await a.GetDataBySearch(search);
         
-        console.log(search.length);
-        const searchValue = e.target.value
-        setSearch(searchValue);
+        // Debouncing the search input to limit the number of API calls
+        clearTimeout(inputRef.current);
+        inputRef.current = setTimeout(async () => {
+          try {
+            console.log(searchValue.length);
+            console.log(searchValue)
+            const data1 = await a.GetDataBySearch(searchValue);
+            console.log(data1);
+            // let data = a.table || [];
+            if (!data1.length) {
+                setGetData(data1);
+            }
+            setGetData(data1);
+            console.log(data1);
+          } catch (error) {
+            console.error('Error fetching data:', error);
+          }
+        }, 1000);
+      };
 
-        let data = await a.table || [];
-        if (!data) {
-            fetchData();
-        }
-        setGetData(data);
-        console.log(data)
-
-
-    }
     const handleclick = async (e) => {
-        
-        console.log(inputref.current)
         let order = await a.order;
         const letters = e.target.innerText.split(" ");
         const newletters = letters.map((element) => {
@@ -112,6 +119,7 @@ export default function Table() {
     }
 
     const handleSelection = (e) => {
+        
         setStatus(e.target.value);
     }
     const handleSubmit = async () => {
@@ -137,6 +145,7 @@ export default function Table() {
         setGetData(data);
     }
     const handleSelectionWebsite = (e) => {
+        console.log(e.target);
         setValue(e.target.value)
         console.log(updateIndex)
     }
@@ -238,7 +247,7 @@ export default function Table() {
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 <button type="button" className="btn btn-primary" data-bs-dismiss="modal"
-                                    onClick={handleDelete} >Understood</button>
+                                    onClick={handleDelete} >DELETE</button>
                             </div>
                         </div>
                     </div>
@@ -269,7 +278,7 @@ export default function Table() {
                 <button style={{ backgroundColor: "red", width: "10%", margin: "20px" }} type="button" className="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop1" >Delete All</button>
 
                 <form className="d-flex" role="search">
-                    <input ref={inputref} className="form-control me-2" type="search" placeholder="Search" aria-label="Search" onChange={handlechange} />
+                    <input ref={inputRef} className="form-control me-2" type="search" placeholder="Search" aria-label="Search" onChange={handleChange} />
                     <button className="btn btn-outline-success" type="submit">Search</button>
                 </form>
             </div>
@@ -291,7 +300,7 @@ export default function Table() {
                         <div className="col col-0" data-label="Job Id">{element.CompanyName}</div>
                         <div className="col col-1" data-label="Customer Name">{element.Position}</div>
                         <div className="col col-2 status" data-label="Customer Name" style={{ backgroundColor: obj[element.Status] }}>{element.Status}</div>
-                        <div className="col col-3" data-label="Customer Name">{element.Date}</div>
+                        <div className="col col-3" data-label="Customer Name">{element.Date.toString()}</div>
                         {/* <div className="col col-3" data-label="Amount">{element[index].image}</div> */}
                         {/* <div className="col col-4" data-label="Payment Status">Pending</div> */}
                         <div className="col col-4">
@@ -306,7 +315,7 @@ export default function Table() {
                                 <svg className="delete" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z" /></svg>
                             </button>
                         </div>
-                        <select value={value} onChange={handleSelectionWebsite}>
+                        <select value={value} onChange={handleSelectionWebsite} key={element}>
                             <option value="-1" disabled="true">Select website</option>
                             {website.length ? website.map((e, index) => {
                                 return <option key={index} value={e.WebsiteName}>{e.WebsiteName}</option>

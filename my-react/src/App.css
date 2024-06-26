@@ -40,6 +40,10 @@
   flex-wrap: wrap;
   
 }
+.website-card{
+  display: flex;
+  justify-content: space-between;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
