@@ -12,9 +12,14 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
+.icon{
+  width: 80px;
+  border-radius: 50%;
+  --base-color: #5f6368;
+    --highlight-color: #444;
+}
 .App-header {
-  background-color: #282c34;
+  /* background-color: #282c34; */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -23,7 +28,10 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
+.gold{
+  background: radial-gradient(ellipse farthest-corner at right bottom, #FEDB37 0%, #FDB931 8%, #9f7928 30%, #8A6E2F 40%, transparent 80%),
+                radial-gradient(ellipse farthest-corner at left top, #FFFFFF 0%, #FFFFAC 8%, #D1B464 25%, #5d4a1f 62.5%, #5d4a1f 100%);
+}
 .App-link {
   color: #61dafb;
 }
@@ -43,6 +51,36 @@
 .website-card{
   display: flex;
   justify-content: space-between;
+}
+.visit{
+  width: 50%;
+  padding: 8px;
+  display: flex;
+  margin: auto;
+  justify-content: space-evenly;
+}
+.visit-1{
+  width: 25%;
+  margin: auto;
+}
+.skeleton-loader{
+  display: flex;
+    gap: 20px;
+    align-items: center;
+}
+.No-data-div{
+  display: flex;
+    height: 400px;
+    justify-content: center;
+}
+.skeleton-body{
+  display: flex;
+    flex-direction: column;
+    gap: 26px;
+}
+.react-loading-skeleton1{
+  height: 80px !important;
+    border-radius: 40px !important;
 }
 @keyframes App-logo-spin {
   from {

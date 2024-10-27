@@ -5,23 +5,26 @@ import { useState, useContext, useEffect } from 'react'
 export default function ShowWebsite(props) {
     const context = useContext(CompanyContext);
     const [getdata,setGetData] = useState([]);
-    const fetchData = async () => {
+    
+    const fetchData =  () => {
         try {    
-            const ans = await context.job
-            console.log(ans)
+            const ans = context.job
+            console.log("hello")
             setGetData(ans);
 
         } catch (error) {
             console.error('Error fetching data:', error);
-            setGetData([]);
+            // setGetData([]);
         }
     };
     useEffect(() => {
+        console.log("Component mounted, fetching data...");
         fetchData();
-
-    }, [context.job]);
-    console.log(getdata)
-    console.log(props.title)
+    },[]);
+    
+    
+    console.log(context.job);
+    console.log(props.title);
 
     return (
         <div>

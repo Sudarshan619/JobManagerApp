@@ -319,7 +319,6 @@ const updateWebsite = async(data)=>{
 }
 
 const setWebsiteJob = (data)=>{
-   
     setJob(data);
     console.log(job)
 }

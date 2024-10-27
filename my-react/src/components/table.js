@@ -1,8 +1,9 @@
-import React, { useContext, useEffect, useState ,useRef} from 'react'
+import React, { useContext, useEffect, useState, useRef } from 'react'
 import '../table.css'
 // import {companyState} from '../context/companystate'
 import CompanyContext from '../context/companycontext'
 import Swal from 'sweetalert2'
+import SkeletonLoader from './skeleton-loader'
 
 export default function Table() {
     const a = useContext(CompanyContext);
@@ -11,17 +12,20 @@ export default function Table() {
     const [image, setImage] = useState('');
     const [status, setStatus] = useState('');
     const [position, setPosition] = useState('');
+    const [deleteName, setDeleteName] = useState('');
     const [date, setDate] = useState('');
     const [modal, setModal] = useState('')
     const [getdata, setGetData] = useState([]);
     const [deleteIndex, setDeleteIndex] = useState(null)
     const [updateIndex, setUpdateIndex] = useState(null);;
-    const [search, setSearch] = useState('');
+    // const [search, setSearch] = useState('');
     const [id, setid] = useState('');
     const [website, setWebsite] = useState([]);
     const [value, setValue] = useState('');
     const inputRef = useRef(null);
     const [empty, setempty] = useState(false);
+    const array = [1, 2, 3,4,5,6];
+    const [loading,setloading] = useState(true)
 
 
     const fetchData = async () => {
@@ -30,16 +34,16 @@ export default function Table() {
             setWebsite(ans1)
             const ans = await a.GetData();
             setGetData(ans);
+            setloading(false);
 
         } catch (error) {
             console.error('Error fetching data:', error);
             setGetData([]);
         }
     };
-    let sum =0;
+  
     useEffect(() => {
         fetchData();
-       
     }, []);
 
 
@@ -84,27 +88,27 @@ export default function Table() {
     const handleChange = async (e) => {
         e.preventDefault();
         const searchValue = e.target.value;
-        
-        
+
+
         // Debouncing the search input to limit the number of API calls
         clearTimeout(inputRef.current);
         inputRef.current = setTimeout(async () => {
-          try {
-            console.log(searchValue.length);
-            console.log(searchValue)
-            const data1 = await a.GetDataBySearch(searchValue);
-            console.log(data1);
-            // let data = a.table || [];
-            if (!data1.length) {
+            try {
+                console.log(searchValue.length);
+                console.log(searchValue)
+                const data1 = await a.GetDataBySearch(searchValue);
+                console.log(data1);
+                // let data = a.table || [];
+                if (!data1.length) {
+                    setGetData(data1);
+                }
                 setGetData(data1);
+                console.log(data1);
+            } catch (error) {
+                console.error('Error fetching data:', error);
             }
-            setGetData(data1);
-            console.log(data1);
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
         }, 1000);
-      };
+    };
 
     const handleclick = async (e) => {
         let order = await a.order;
@@ -119,7 +123,7 @@ export default function Table() {
     }
 
     const handleSelection = (e) => {
-        
+
         setStatus(e.target.value);
     }
     const handleSubmit = async () => {
@@ -138,7 +142,7 @@ export default function Table() {
             setempty(true);
             return;
         }
-        
+
         a.UpdateData({ name, position, image, status, date }, id);
         const data = await a.GetData();
         setModal("modal");
@@ -150,7 +154,7 @@ export default function Table() {
         console.log(updateIndex)
     }
     const handleAdd = async () => {
-        const ans = await a.updateWebsite({updateIndex,value});
+        await a.updateWebsite({ updateIndex, value });
     }
     const obj = {
         "In progress": "yellow",
@@ -158,6 +162,13 @@ export default function Table() {
         "Selected": "green",
         "Rejected": "red",
     }
+    const formatDate = (dateString) => {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-based
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
 
     return (
         <>
@@ -177,11 +188,11 @@ export default function Table() {
                                         className="dns-input"
                                         type="text"
                                         value={name}
-                                        onChange={(e) => {setName(e.target.value); setempty(false);}}
-                                        
-                                        
+                                        onChange={(e) => { setName(e.target.value); setempty(false); }}
+
+
                                     />
-                                
+
                                 </label>
                                 <label className="dns-label">
                                     Position
@@ -192,7 +203,7 @@ export default function Table() {
                                         onChange={(e) => setPosition(e.target.value)}
                                         required
                                     />
-                                   { !position.length && <h6>This field cannot be empty</h6>}
+                                    {!position.length && <h6>This field cannot be empty</h6>}
                                 </label>
                                 <label className="dns-label">
                                     Status
@@ -224,7 +235,7 @@ export default function Table() {
                                         required
                                     />
                                 </label>
-                                { empty ?<h6>Please fill all details</h6>:""}
+                                {empty ? <h6>Please fill all details</h6> : ""}
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -242,7 +253,7 @@ export default function Table() {
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div className="modal-body">
-                                Are you sure you want to delete the item
+                                Are you sure you want to  <b>{deleteName.toUpperCase()}</b>  from the Job list
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -277,9 +288,9 @@ export default function Table() {
             <div className='search-box'>
                 <button style={{ backgroundColor: "red", width: "10%", margin: "20px" }} type="button" className="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop1" >Delete All</button>
 
-                <form className="d-flex" role="search">
+                <form className="d-flex" role="search" style={{alignItems:"center"}}>
                     <input ref={inputRef} className="form-control me-2" type="search" placeholder="Search" aria-label="Search" onChange={handleChange} />
-                    <button className="btn btn-outline-success" type="submit">Search</button>
+                    <button style={{height:"fit-content"}} className="btn btn-outline-success" type="submit">Search</button>
                 </form>
             </div>
             <ul className="responsive-table">
@@ -294,13 +305,15 @@ export default function Table() {
                     <div className="col col-4"></div>
                     <div className="col col-4"></div>
                 </li>
+                {loading && <SkeletonLoader array={array}></SkeletonLoader>}
                 {getdata.length > 0 ? getdata.map((element, index) =>
+                
                     <li key={index} className="table-row">
-                        <div className="col col-2" data-label="Job Id"><img className="img-logo" src={element.Image}></img></div>
+                        <div className="col col-2" data-label="Job Id"><img className="img-logo" src={element.Image} alt=""></img></div>
                         <div className="col col-0" data-label="Job Id">{element.CompanyName}</div>
                         <div className="col col-1" data-label="Customer Name">{element.Position}</div>
                         <div className="col col-2 status" data-label="Customer Name" style={{ backgroundColor: obj[element.Status] }}>{element.Status}</div>
-                        <div className="col col-3" data-label="Customer Name">{element.Date.toString()}</div>
+                        <div className="col col-3" data-label="Customer Name">{formatDate(element.Date.toString())}</div>
                         {/* <div className="col col-3" data-label="Amount">{element[index].image}</div> */}
                         {/* <div className="col col-4" data-label="Payment Status">Pending</div> */}
                         <div className="col col-4">
@@ -311,7 +324,7 @@ export default function Table() {
                             </button>
                         </div>
                         <div className="col col-4">
-                            <button type="button" className="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop1" onClick={() => setDeleteIndex(element._id)}>
+                            <button type="button" className="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop1" onClick={() => { setDeleteIndex(element._id); setDeleteName(element.CompanyName) }}>
                                 <svg className="delete" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z" /></svg>
                             </button>
                         </div>
@@ -328,7 +341,10 @@ export default function Table() {
                             </button>
                         </div>
                     </li>
-                ) : <p style={{ color: "white" }}>No Job has been added</p>}
+                ) : (!loading && <div className='No-data-div'>
+                    <img style={{width:"100%"}} src='9264828.jpg' alt='#'></img>
+                    </div>)}
+                
 
             </ul>
 
