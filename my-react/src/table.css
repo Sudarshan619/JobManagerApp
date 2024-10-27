@@ -57,9 +57,9 @@ body {
   .status{
     text-align: center;
     height: 32px;
-    border-radius: 12px;
+    border-radius: 4px;
     justify-content: center;
-    color: black;
+    color: #ffffff;
     width: fit-content;
     padding: 8px;
     align-items: center;

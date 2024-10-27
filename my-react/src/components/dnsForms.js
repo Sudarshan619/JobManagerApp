@@ -56,9 +56,9 @@ const DnsForm = (props) => {
           Image
           <input
             className="dns-input"
-            type="text"
+            type="file"
             // value={Image}
-            onChange={(e) => setImage(e.target.value)
+            onChange={(e) => {setImage(e.target.value.slice(12)); console.log(e.target.value.slice(12))}
             }
           />
           <span style={{color:"red"}}>Note:Only use the image link from google</span>
