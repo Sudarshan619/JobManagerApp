@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 require('dotenv').config();
-// 
-const mongodbUrl =  process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/test"; // Remove directConnection=true
+// process.env.MONGODB_URI ||
+const mongodbUrl =   process.env.MONGODB_URI || "mongodb://127.0.0.1:27017/test"; // Remove directConnection=true
 
 const connectToDb = async () => {
   try {

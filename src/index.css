@@ -13,6 +13,7 @@ code {
 }
 #root{
   width: 100%;
-  background-color: #222325;
+  /* background-color: #222325; */
+  background-color: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
   height: -webkit-fill-available;
 }

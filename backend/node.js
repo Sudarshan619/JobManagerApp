@@ -37,12 +37,12 @@ app.listen(4000, () => {
 app.post('/dns', async (req, res) => {
   try {
     const { CompanyName, Position, Image} = req.body;
-
+    console.log(Image, "hello");
     // Create a new instance of the UserModel
     const user = new Company({
       CompanyName: CompanyName,
       Position: Position,
-      Image: Image,
+      Image: Image.filename,
       // User:req.user.id
     });
 
